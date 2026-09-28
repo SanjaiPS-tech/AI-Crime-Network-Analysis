@@ -1,0 +1,265 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #0f0f1a;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #1a1a2e;
+  border-bottom: 1px solid #2d2d44;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-icon {
+  color: #e41a1c;
+}
+
+.header-left h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #eaeaea;
+  letter-spacing: -0.5px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 280px;
+  background: #1a1a2e;
+  border-right: 1px solid #2d2d44;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebar-section h3 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.document-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.doc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  color: #ccc;
+}
+
+.doc-item:hover {
+  background: #252540;
+}
+
+.doc-item.active {
+  background: #2d2d44;
+  color: #eaeaea;
+}
+
+.doc-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+}
+
+.delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  color: #666;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.15s;
+}
+
+.doc-item:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  background: #e41a1c20;
+  color: #e41a1c;
+}
+
+.empty-state {
+  font-size: 13px;
+  color: #666;
+  text-align: center;
+  padding: 20px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.action-btn.primary {
+  background: #e41a1c;
+  color: white;
+}
+
+.action-btn.primary:hover:not(:disabled) {
+  background: #cc181c;
+  transform: translateY(-1px);
+}
+
+.action-btn.primary:disabled {
+  background: #3d3d5c;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.main-content {
+  flex: 1;
+  overflow: auto;
+  padding: 24px;
+}
+
+.empty-state-large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 400px;
+  color: #666;
+  text-align: center;
+  gap: 16px;
+}
+
+.empty-state-large h2 {
+  color: #aaa;
+  font-weight: 500;
+}
+
+.empty-state-large p {
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.results-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 600px;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: #1a1a2e;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #2d2d44;
+}
+
+.tabs button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: none;
+  background: transparent;
+  color: #888;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tabs button:hover {
+  color: #ddd;
+  background: #252540;
+}
+
+.tabs button.active {
+  background: #e41a1c;
+  color: white;
+}
+
+.tab-content {
+  flex: 1;
+  min-height: 500px;
+}
+
+@media (max-width: 1024px) {
+  .main-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #2d2d44;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 16px;
+  }
+  
+  .sidebar-section {
+    flex: 1;
+    min-width: 200px;
+  }
+}

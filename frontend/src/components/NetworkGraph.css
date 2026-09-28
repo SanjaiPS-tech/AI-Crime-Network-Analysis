@@ -1,0 +1,141 @@
+.network-graph-container {
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  position: relative;
+  background: #0f0f1a;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.network-graph-container .react-flow {
+  width: 100%;
+  height: 100%;
+  background: #0f0f1a;
+}
+
+.custom-node {
+  background: #1a1a2e;
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 140px;
+  max-width: 200px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s;
+}
+
+.custom-node.selected {
+  border-width: 3px;
+  box-shadow: 0 0 0 3px rgba(228, 26, 28, 0.3), 0 4px 20px rgba(0, 0, 0, 0.4);
+  transform: scale(1.02);
+}
+
+.node-handle {
+  width: 10px;
+  height: 10px;
+  background: #444;
+  border: 2px solid #1a1a2e;
+  border-radius: 50%;
+}
+
+.node-handle:hover {
+  background: #e41a1c;
+}
+
+.node-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.node-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.node-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.node-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #eaeaea;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.node-type {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+.edge-path {
+  transition: stroke 0.2s;
+}
+
+.network-legend {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(26, 26, 46, 0.95);
+  border: 1px solid #2d2d44;
+  border-radius: 10px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  min-width: 160px;
+}
+
+.network-legend h4 {
+  font-size: 12px;
+  font-weight: 600;
+  color: #aaa;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #ccc;
+}
+
+.legend-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+}
+
+.network-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 500px;
+  color: #666;
+  gap: 16px;
+}
+
+.network-empty p {
+  font-size: 16px;
+}

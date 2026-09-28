@@ -1,0 +1,104 @@
+.upload-panel {
+  position: relative;
+}
+
+.drop-zone {
+  border: 2px dashed #2d2d44;
+  border-radius: 10px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #1a1a2e;
+  min-width: 200px;
+}
+
+.drop-zone:hover,
+.drop-zone.active {
+  border-color: #e41a1c;
+  background: #e41a1c10;
+}
+
+.drop-zone.uploading {
+  border-color: #377eb8;
+  background: #377eb810;
+  cursor: wait;
+}
+
+.drop-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.upload-icon {
+  color: #666;
+  transition: color 0.2s;
+}
+
+.drop-zone:hover .upload-icon,
+.drop-zone.active .upload-icon {
+  color: #e41a1c;
+}
+
+.spinner {
+  color: #377eb8;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.drop-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: #ccc;
+  margin: 0;
+}
+
+.drop-hint {
+  font-size: 11px;
+  color: #666;
+  margin: 0;
+  text-align: center;
+}
+
+.upload-message {
+  position: absolute;
+  bottom: -36px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.upload-message.success {
+  background: #4daf4a20;
+  border: 1px solid #4daf4a;
+  color: #4daf4a;
+}
+
+.upload-message.error {
+  background: #e41a1c20;
+  border: 1px solid #e41a1c;
+  color: #e41a1c;
+}
