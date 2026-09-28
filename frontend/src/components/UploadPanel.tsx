@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Upload, FileText, X, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Upload, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import './UploadPanel.css';
 
 interface UploadPanelProps {

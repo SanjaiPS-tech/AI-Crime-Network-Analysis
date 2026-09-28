@@ -7,7 +7,7 @@ python-multipart==0.0.6
 
 # NLP / Entity Extraction
 spacy==3.7.4
-spacy-transformers==1.3.0
+# spacy-transformers==1.3.0  # yanked, skip for now
 transformers==4.31.0
 torch==2.2.0
 

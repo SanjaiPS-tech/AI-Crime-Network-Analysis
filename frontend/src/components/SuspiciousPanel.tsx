@@ -70,7 +70,7 @@ const SuspiciousPanel: React.FC<SuspiciousPanelProps> = ({ suspiciousEntities })
   );
 
   const riskCounts = useMemo(() => {
-    const counts = { Critical: 0, High: 0, Medium: 0, Low: 0 };
+    const counts: Record<string, number> = { Critical: 0, High: 0, Medium: 0, Low: 0 };
     sortedEntities.forEach(e => {
       const level = getRiskLevel(e.risk_score);
       counts[level.label]++;

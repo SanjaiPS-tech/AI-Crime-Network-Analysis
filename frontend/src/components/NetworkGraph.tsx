@@ -3,8 +3,8 @@ import ReactFlow, {
   Background, 
   Controls, 
   MiniMap, 
-  Node, 
-  Edge,
+  // Node, 
+  // Edge,
   useNodesState,
   useEdgesState,
   addEdge,
@@ -14,6 +14,7 @@ import ReactFlow, {
   Position,
   NodeTypes,
   EdgeTypes,
+  type EdgeProps,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { Users, Phone, MapPin, Car, Network, Search, AlertTriangle, Mail } from 'lucide-react';
@@ -76,7 +77,7 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 // Custom Node Component
-const CustomNode: React.FC<{ data: { label: string; type: string; size: number; color: string } }> = ({ 
+const CustomNode: React.FC<{ data: { label: string; type: string; size: number; color: string }; selected?: boolean }> = ({ 
   data, 
   selected 
 }) => {
@@ -111,14 +112,15 @@ const CustomNode: React.FC<{ data: { label: string; type: string; size: number; 
 };
 
 // Custom Edge Component
-const CustomEdge: React.FC<{ 
-  sourceX: number; 
-  sourceY: number; 
-  targetX: number; 
-  targetY: number; 
-  id: string;
-  data: { type: string; weight: number };
-}> = ({ sourceX, sourceY, targetX, targetY, id, data }) => {
+const CustomEdge: React.FC<EdgeProps<{ type: string; weight: number }>> = ({ 
+  sourceX, 
+  sourceY, 
+  targetX, 
+  targetY, 
+  id, 
+  data, 
+  style 
+}) => {
   const path = `M${sourceX},${sourceY} C${(sourceX + targetX) / 2},${sourceY} ${(sourceX + targetX) / 2},${targetY} ${targetX},${targetY}`;
   
   return (
@@ -126,7 +128,7 @@ const CustomEdge: React.FC<{
       id={id}
       d={path}
       stroke="#555"
-      strokeWidth={Math.max(1, data.weight * 2)}
+      strokeWidth={Math.max(1, (data?.weight || 1) * 2)}
       strokeOpacity={0.6}
       fill="none"
       markerEnd="url(#arrowhead)"
@@ -145,7 +147,7 @@ const edgeTypes: EdgeTypes = {
 
 const NetworkGraph: React.FC<NetworkGraphProps> = ({ graph, entities }) => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(
+  const [nodes, , onNodesChange] = useNodesState(
     graph.nodes.map(n => ({
       id: n.id,
       type: 'custom',
@@ -174,7 +176,7 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({ graph, entities }) => {
   );
 
   const onConnect = (connection: Connection) => {
-    setEdges((eds) => addEdge({ 
+    setEdges((eds: any[]) => addEdge({ 
       ...connection, 
       type: 'custom',
       data: { type: 'RELATED_TO', weight: 0.5 },
@@ -213,12 +215,11 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({ graph, entities }) => {
         <Background 
           color="#222" 
           gap={16} 
-          scale={1} 
           style={{ opacity: 0.3 }}
         />
         <Controls />
         <MiniMap 
-          nodeColor={(node) => node.data.color}
+          nodeColor={(node: { data: { color: string } }) => node.data.color}
           maskColor="rgba(228, 26, 28, 0.3)"
         />
         <defs>

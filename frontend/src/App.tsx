@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Upload, FileText, Search, AlertTriangle, 
   Network, Users, Phone, MapPin, Car, Mail,
@@ -118,11 +118,7 @@ function App() {
   const [activeTab, setActiveTab] = useState<'network' | 'entities' | 'suspicious'>('network');
 
   // Load documents on mount
-  useEffect(() => {
-    loadDocuments();
-  }, []);
-
-  const loadDocuments = async () => {
+  const loadDocuments = useCallback(async () => {
     try {
       const res = await fetch('/api/v1/documents');
       const data = await res.json();
@@ -133,7 +129,11 @@ function App() {
     } catch (err) {
       console.error('Failed to load documents:', err);
     }
-  };
+  }, [selectedDocId]);
+
+  useEffect(() => {
+    loadDocuments();
+  }, [loadDocuments]);
 
   const handleDocumentSelect = async (docId: string) => {
     setSelectedDocId(docId);
