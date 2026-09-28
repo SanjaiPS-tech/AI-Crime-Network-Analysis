@@ -102,15 +102,17 @@ const UploadPanel: React.FC<UploadPanelProps> = ({ onUpload }) => {
         <div className="drop-content">
           {!uploading ? (
             <>
-              <Upload size={32} className="upload-icon" />
+              <div className="upload-icon-wrapper">
+                <Upload size={28} className="upload-icon" />
+              </div>
               <p className="drop-text">
                 {dragActive ? 'Drop file here' : 'Click or drag to upload'}
               </p>
-              <p className="drop-hint">FIR, reports, .txt, .pdf, .json, .csv (max 10MB)</p>
+              <p className="drop-hint">FIR, reports · .txt, .pdf, .json, .csv (max 10MB)</p>
             </>
           ) : (
             <>
-              <Loader2 size={32} className="spinner" />
+              <Loader2 size={28} className="spinner" />
               <p className="drop-text">Processing...</p>
             </>
           )}

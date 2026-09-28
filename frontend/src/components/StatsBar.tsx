@@ -32,14 +32,14 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 const TYPE_COLORS: Record<string, string> = {
-  PERSON: '#e41a1c',
-  PHONE: '#377eb8',
-  LOCATION: '#4daf4a',
-  VEHICLE: '#984ea3',
-  ORGANIZATION: '#ff7f00',
-  DATE: '#ffff33',
-  MONEY: '#a65628',
-  EMAIL: '#f781bf',
+  PERSON: '#e94560',
+  PHONE: '#0ea5e9',
+  LOCATION: '#22c55e',
+  VEHICLE: '#a855f7',
+  ORGANIZATION: '#f97316',
+  DATE: '#eab308',
+  MONEY: '#f43f5e',
+  EMAIL: '#ec4899',
 };
 
 const StatsBar: React.FC<StatsBarProps> = ({ 

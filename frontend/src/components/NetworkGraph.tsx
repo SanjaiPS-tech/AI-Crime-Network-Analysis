@@ -3,8 +3,6 @@ import ReactFlow, {
   Background, 
   Controls, 
   MiniMap, 
-  // Node, 
-  // Edge,
   useNodesState,
   useEdgesState,
   addEdge,
@@ -19,6 +17,39 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import { Users, Phone, MapPin, Car, Network, Search, AlertTriangle, Mail } from 'lucide-react';
 import './NetworkGraph.css';
+
+const TYPE_COLORS: Record<string, string> = {
+  PERSON: '#e94560',
+  PHONE: '#0ea5e9',
+  LOCATION: '#22c55e',
+  VEHICLE: '#a855f7',
+  ORGANIZATION: '#f97316',
+  DATE: '#eab308',
+  MONEY: '#f43f5e',
+  EMAIL: '#ec4899',
+};
+
+const TYPE_ICONS: Record<string, React.ReactNode> = {
+  PERSON: <Users size={14} />,
+  PHONE: <Phone size={14} />,
+  LOCATION: <MapPin size={14} />,
+  VEHICLE: <Car size={14} />,
+  ORGANIZATION: <Network size={14} />,
+  DATE: <Search size={14} />,
+  MONEY: <AlertTriangle size={14} />,
+  EMAIL: <Mail size={14} />,
+};
+
+const TYPE_LABELS: Record<string, string> = {
+  PERSON: 'Person',
+  PHONE: 'Phone',
+  LOCATION: 'Location',
+  VEHICLE: 'Vehicle',
+  ORGANIZATION: 'Organization',
+  DATE: 'Date',
+  MONEY: 'Money',
+  EMAIL: 'Email',
+};
 
 interface GraphNode {
   id: string;
@@ -54,33 +85,11 @@ interface NetworkGraphProps {
   entities: Entity[];
 }
 
-const TYPE_ICONS: Record<string, React.ReactNode> = {
-  PERSON: <Users size={14} />,
-  PHONE: <Phone size={14} />,
-  LOCATION: <MapPin size={14} />,
-  VEHICLE: <Car size={14} />,
-  ORGANIZATION: <Network size={14} />,
-  DATE: <Search size={14} />,
-  MONEY: <AlertTriangle size={14} />,
-  EMAIL: <Mail size={14} />,
-};
-
-const TYPE_LABELS: Record<string, string> = {
-  PERSON: 'Person',
-  PHONE: 'Phone',
-  LOCATION: 'Location',
-  VEHICLE: 'Vehicle',
-  ORGANIZATION: 'Org',
-  DATE: 'Date',
-  MONEY: 'Money',
-  EMAIL: 'Email',
-};
-
 // Custom Node Component
-const CustomNode: React.FC<{ data: { label: string; type: string; size: number; color: string }; selected?: boolean }> = ({ 
-  data, 
-  selected 
-}) => {
+const CustomNode: React.FC<{ 
+  data: { label: string; type: string; size: number; color: string }; 
+  selected?: boolean 
+}> = ({ data, selected }) => {
   const icon = TYPE_ICONS[data.type] || <Search size={14} />;
   const typeLabel = TYPE_LABELS[data.type] || data.type;
 
@@ -99,7 +108,7 @@ const CustomNode: React.FC<{ data: { label: string; type: string; size: number; 
             {icon}
           </span>
           <span className="node-label" title={data.label}>
-            {data.label.length > 20 ? data.label.substring(0, 20) + '...' : data.label}
+            {data.label.length > 22 ? data.label.substring(0, 22) + '...' : data.label}
           </span>
         </div>
         <div className="node-type" style={{ color: data.color }}>
@@ -122,17 +131,23 @@ const CustomEdge: React.FC<EdgeProps<{ type: string; weight: number }>> = ({
   style 
 }) => {
   const path = `M${sourceX},${sourceY} C${(sourceX + targetX) / 2},${sourceY} ${(sourceX + targetX) / 2},${targetY} ${targetX},${targetY}`;
-  
+  const edgeColor = data?.type === 'CONTACTED' ? '#e94560' : 
+                    data?.type === 'LOCATED_AT' ? '#22c55e' :
+                    data?.type === 'OWNS' ? '#a855f7' :
+                    data?.type === 'MEMBER_OF' ? '#f97316' :
+                    data?.type === 'ASSOCIATED_WITH' ? '#64748b' : '#555';
+
   return (
     <path
       id={id}
       d={path}
-      stroke="#555"
-      strokeWidth={Math.max(1, (data?.weight || 1) * 2)}
-      strokeOpacity={0.6}
+      stroke={edgeColor}
+      strokeWidth={Math.max(1.5, (data?.weight || 1) * 2.5)}
+      strokeOpacity={0.7}
       fill="none"
       markerEnd="url(#arrowhead)"
       className="edge-path"
+      style={{ filter: 'drop-shadow(0 0 3px currentColor)' }}
     />
   );
 };
@@ -155,7 +170,7 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({ graph, entities }) => {
       data: {
         label: n.label,
         type: n.type,
-        size: Math.max(120, n.size),
+        size: Math.max(130, n.size),
         color: n.color,
       },
       draggable: true,
@@ -170,7 +185,7 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({ graph, entities }) => {
       type: 'custom',
       data: { type: e.type, weight: e.weight },
       animated: e.weight > 0.7,
-      style: { stroke: e.color, strokeWidth: Math.max(1, e.weight * 2) },
+      style: { stroke: e.color, strokeWidth: Math.max(1.5, e.weight * 2.5) },
       markerEnd: { type: MarkerType.ArrowClosed, color: e.color },
     }))
   );
@@ -180,7 +195,7 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({ graph, entities }) => {
       ...connection, 
       type: 'custom',
       data: { type: 'RELATED_TO', weight: 0.5 },
-      markerEnd: { type: MarkerType.ArrowClosed, color: '#888' },
+      markerEnd: { type: MarkerType.ArrowClosed, color: '#64748b' },
     }, eds));
   };
 
@@ -213,25 +228,25 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({ graph, entities }) => {
         attributionPosition="bottom-right"
       >
         <Background 
-          color="#222" 
+          color="#1a1a2e" 
           gap={16} 
-          style={{ opacity: 0.3 }}
+          style={{ opacity: 0.4 }}
         />
         <Controls />
         <MiniMap 
           nodeColor={(node: { data: { color: string } }) => node.data.color}
-          maskColor="rgba(228, 26, 28, 0.3)"
+          maskColor="rgba(233, 69, 96, 0.25)"
         />
         <defs>
           <marker 
             id="arrowhead" 
-            markerWidth={10} 
-            markerHeight={7} 
-            refX={9} 
-            refY={3.5} 
+            markerWidth={12} 
+            markerHeight={8} 
+            refX={10} 
+            refY={4} 
             orient="auto"
           >
-            <path d="M0,0 L0,7 L9,3.5 Z" fill="#555" />
+            <path d="M0,0 L0,8 L10,4 Z" fill="#555" />
           </marker>
         </defs>
       </ReactFlow>
@@ -254,18 +269,6 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({ graph, entities }) => {
       </div>
     </div>
   );
-};
-
-// Need TYPE_COLORS
-const TYPE_COLORS: Record<string, string> = {
-  PERSON: '#e41a1c',
-  PHONE: '#377eb8',
-  LOCATION: '#4daf4a',
-  VEHICLE: '#984ea3',
-  ORGANIZATION: '#ff7f00',
-  DATE: '#ffff33',
-  MONEY: '#a65628',
-  EMAIL: '#f781bf',
 };
 
 export default NetworkGraph;

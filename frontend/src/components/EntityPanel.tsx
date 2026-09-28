@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Users, Phone, MapPin, Car, Network, Search, AlertTriangle, Mail, ChevronDown, ChevronUp, Filter } from 'lucide-react';
+import React, { useState, useMemo, useCallback } from 'react';
+import { Users, Phone, MapPin, Car, Network, Search, AlertTriangle, Mail, ChevronDown, ChevronUp, Filter, X } from 'lucide-react';
 import './EntityPanel.css';
 
 interface Entity {
@@ -52,14 +52,14 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 const TYPE_COLORS: Record<string, string> = {
-  PERSON: '#e41a1c',
-  PHONE: '#377eb8',
-  LOCATION: '#4daf4a',
-  VEHICLE: '#984ea3',
-  ORGANIZATION: '#ff7f00',
-  DATE: '#ffff33',
-  MONEY: '#a65628',
-  EMAIL: '#f781bf',
+  PERSON: '#e94560',
+  PHONE: '#0ea5e9',
+  LOCATION: '#22c55e',
+  VEHICLE: '#a855f7',
+  ORGANIZATION: '#f97316',
+  DATE: '#eab308',
+  MONEY: '#f43f5e',
+  EMAIL: '#ec4899',
 };
 
 const EntityPanel: React.FC<EntityPanelProps> = ({ entities, relationships }) => {
@@ -77,11 +77,11 @@ const EntityPanel: React.FC<EntityPanelProps> = ({ entities, relationships }) =>
     });
   }, [entities, searchTerm, selectedType]);
 
-  const getConnections = (entityId: string) => {
+  const getConnections = useCallback((entityId: string) => {
     return relationships.filter(r => r.source_id === entityId || r.target_id === entityId);
-  };
+  }, [relationships]);
 
-  const getConnectedEntities = (entityId: string) => {
+  const getConnectedEntities = useCallback((entityId: string) => {
     const connections = getConnections(entityId);
     const connectedIds = new Set<string>();
     connections.forEach(r => {
@@ -89,19 +89,20 @@ const EntityPanel: React.FC<EntityPanelProps> = ({ entities, relationships }) =>
       if (r.target_id !== entityId) connectedIds.add(r.target_id);
     });
     return entities.filter(e => connectedIds.has(e.id));
-  };
+  }, [entities, getConnections]);
 
-  const toggleExpand = (id: string) => {
-    const newExpanded = new Set(expandedIds);
-    if (newExpanded.has(id)) {
-      newExpanded.delete(id);
-    } else {
-      newExpanded.add(id);
-    }
-    setExpandedIds(newExpanded);
-  };
+  const toggleExpand = useCallback((id: string) => {
+    setExpandedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }, []);
 
   const isExpanded = (id: string) => expandedIds.has(id);
+
+  const clearSearch = () => setSearchTerm('');
 
   if (entities.length === 0) {
     return (
@@ -128,6 +129,11 @@ const EntityPanel: React.FC<EntityPanelProps> = ({ entities, relationships }) =>
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+          {searchTerm && (
+            <button className="clear-search" onClick={clearSearch} aria-label="Clear search">
+              <X size={14} />
+            </button>
+          )}
         </div>
         <select 
           value={selectedType} 
@@ -157,7 +163,7 @@ const EntityPanel: React.FC<EntityPanelProps> = ({ entities, relationships }) =>
                 className="entity-header"
                 onClick={() => toggleExpand(entity.id)}
               >
-                <div className="entity-icon" style={{ borderColor: color }}>
+                <div className="entity-icon" style={{ borderColor: color, background: `${color}15` }}>
                   {icon}
                 </div>
                 <div className="entity-info">
@@ -165,7 +171,7 @@ const EntityPanel: React.FC<EntityPanelProps> = ({ entities, relationships }) =>
                     <span className="entity-name" title={entity.text}>{entity.text}</span>
                     <span 
                       className="entity-type-badge"
-                      style={{ background: color + '20', color }}
+                      style={{ background: `${color}20`, color }}
                     >
                       {TYPE_LABELS[entity.type] || entity.type}
                     </span>

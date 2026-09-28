@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { AlertTriangle, Users, Phone, MapPin, Car, Network, Mail, Search, TrendingUp, Shield } from 'lucide-react';
+import { AlertTriangle, Users, Phone, MapPin, Car, Network, Mail, Search, TrendingUp, Shield, Target } from 'lucide-react';
 import './SuspiciousPanel.css';
 
 interface Entity {
@@ -46,21 +46,21 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 const TYPE_COLORS: Record<string, string> = {
-  PERSON: '#e41a1c',
-  PHONE: '#377eb8',
-  LOCATION: '#4daf4a',
-  VEHICLE: '#984ea3',
-  ORGANIZATION: '#ff7f00',
-  DATE: '#ffff33',
-  MONEY: '#a65628',
-  EMAIL: '#f781bf',
+  PERSON: '#e94560',
+  PHONE: '#0ea5e9',
+  LOCATION: '#22c55e',
+  VEHICLE: '#a855f7',
+  ORGANIZATION: '#f97316',
+  DATE: '#eab308',
+  MONEY: '#f43f5e',
+  EMAIL: '#ec4899',
 };
 
 const getRiskLevel = (score: number) => {
-  if (score >= 0.7) return { label: 'Critical', color: '#e41a1c', icon: <Shield size={14} /> };
-  if (score >= 0.5) return { label: 'High', color: '#ff7f00', icon: <AlertTriangle size={14} /> };
-  if (score >= 0.3) return { label: 'Medium', color: '#ffff33', icon: <TrendingUp size={14} /> };
-  return { label: 'Low', color: '#4daf4a', icon: <Search size={14} /> };
+  if (score >= 0.7) return { label: 'Critical', color: '#ef4444', icon: <Target size={14} /> };
+  if (score >= 0.5) return { label: 'High', color: '#f97316', icon: <AlertTriangle size={14} /> };
+  if (score >= 0.3) return { label: 'Medium', color: '#eab308', icon: <TrendingUp size={14} /> };
+  return { label: 'Low', color: '#22c55e', icon: <Shield size={14} /> };
 };
 
 const SuspiciousPanel: React.FC<SuspiciousPanelProps> = ({ suspiciousEntities }) => {
@@ -81,7 +81,7 @@ const SuspiciousPanel: React.FC<SuspiciousPanelProps> = ({ suspiciousEntities })
   if (suspiciousEntities.length === 0) {
     return (
       <div className="suspicious-panel-empty">
-        <Shield size={48} />
+        <Shield size={56} />
         <h3>No Suspicious Patterns Detected</h3>
         <p>The analysis didn't identify any entities with suspicious connection patterns.</p>
         <p className="hint">Entities with high connectivity, bridging roles, or central positions would appear here.</p>
@@ -93,7 +93,9 @@ const SuspiciousPanel: React.FC<SuspiciousPanelProps> = ({ suspiciousEntities })
     <div className="suspicious-panel">
       <div className="panel-header">
         <div className="header-content">
-          <AlertTriangle className="header-icon" size={24} />
+          <div className="header-icon">
+            <AlertTriangle size={24} />
+          </div>
           <div>
             <h3>Suspicious Entities</h3>
             <p className="subtitle">{suspiciousEntities.length} entities flagged for review</p>
@@ -120,7 +122,7 @@ const SuspiciousPanel: React.FC<SuspiciousPanelProps> = ({ suspiciousEntities })
             <div key={entity.id} className="suspicious-card" style={{ borderLeftColor: risk.color }}>
               <div className="card-main">
                 <div className="entity-header">
-                  <div className="entity-icon" style={{ background: color + '20', borderColor: color }}>
+                  <div className="entity-icon" style={{ background: `${color}20`, borderColor: color }}>
                     {icon}
                   </div>
                   <div className="entity-info">
@@ -128,7 +130,7 @@ const SuspiciousPanel: React.FC<SuspiciousPanelProps> = ({ suspiciousEntities })
                       <span className="entity-name">{entity.text}</span>
                       <span 
                         className="entity-type-badge"
-                        style={{ background: color + '20', color }}
+                        style={{ background: `${color}20`, color }}
                       >
                         {TYPE_LABELS[entity.type] || entity.type}
                       </span>
@@ -141,7 +143,7 @@ const SuspiciousPanel: React.FC<SuspiciousPanelProps> = ({ suspiciousEntities })
                     <div 
                       className="risk-score-circle"
                       style={{ 
-                        background: `conic-gradient(${risk.color} ${suspicious.risk_score * 360}deg, #2d2d44 0deg)` 
+                        background: `conic-gradient(${risk.color} ${suspicious.risk_score * 360}deg, var(--border-primary) 0deg)` 
                       }}
                     >
                       <span className="risk-score-value">
@@ -162,7 +164,7 @@ const SuspiciousPanel: React.FC<SuspiciousPanelProps> = ({ suspiciousEntities })
                     <div className="metric-bar">
                       <div 
                         className="metric-fill" 
-                        style={{ width: `${suspicious.degree_centrality * 100}%`, background: '#e41a1c' }}
+                        style={{ width: `${suspicious.degree_centrality * 100}%`, background: '#ef4444' }}
                       />
                     </div>
                   </div>
@@ -172,7 +174,7 @@ const SuspiciousPanel: React.FC<SuspiciousPanelProps> = ({ suspiciousEntities })
                     <div className="metric-bar">
                       <div 
                         className="metric-fill" 
-                        style={{ width: `${suspicious.betweenness_centrality * 100}%`, background: '#ff7f00' }}
+                        style={{ width: `${suspicious.betweenness_centrality * 100}%`, background: '#f97316' }}
                       />
                     </div>
                   </div>
@@ -182,7 +184,7 @@ const SuspiciousPanel: React.FC<SuspiciousPanelProps> = ({ suspiciousEntities })
                     <div className="metric-bar">
                       <div 
                         className="metric-fill" 
-                        style={{ width: `${suspicious.closeness_centrality * 100}%`, background: '#4daf4a' }}
+                        style={{ width: `${suspicious.closeness_centrality * 100}%`, background: '#22c55e' }}
                       />
                     </div>
                   </div>

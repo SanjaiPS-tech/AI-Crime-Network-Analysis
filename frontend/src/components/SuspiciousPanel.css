@@ -3,17 +3,18 @@
   flex-direction: column;
   height: 100%;
   min-height: 600px;
-  background: #1a1a2e;
-  border-radius: 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
   overflow: hidden;
+  border: 1px solid var(--border-primary);
 }
 
 .panel-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 20px;
-  border-bottom: 1px solid #2d2d44;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-primary);
   flex-wrap: wrap;
   gap: 16px;
 }
@@ -21,23 +22,31 @@
 .header-content {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .header-icon {
-  color: #e41a1c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(168, 85, 247, 0.15));
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-md);
+  color: var(--accent-primary);
 }
 
 .header-content h3 {
   font-size: 18px;
-  font-weight: 600;
-  color: #eaeaea;
+  font-weight: 700;
+  color: var(--text-primary);
   margin: 0;
 }
 
 .subtitle {
   font-size: 13px;
-  color: #888;
+  color: var(--text-muted);
   margin: 2px 0 0 0;
 }
 
@@ -51,98 +60,106 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px 14px;
-  background: #252540;
-  border: 1px solid #2d2d44;
-  border-radius: 10px;
-  min-width: 70px;
-  transition: all 0.2s;
+  padding: 10px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  min-width: 80px;
+  transition: var(--transition);
+}
+
+.risk-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .risk-badge.critical {
-  border-color: #e41a1c;
-  background: #e41a1c15;
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
 }
 
 .risk-badge.high {
-  border-color: #ff7f00;
-  background: #ff7f0015;
+  border-color: #f97316;
+  background: rgba(249, 115, 22, 0.1);
 }
 
 .risk-badge.medium {
-  border-color: #ffff33;
-  background: #ffff3315;
+  border-color: #eab308;
+  background: rgba(234, 179, 8, 0.1);
 }
 
 .risk-badge.low {
-  border-color: #4daf4a;
-  background: #4daf4a15;
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
 }
 
 .risk-count {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
-  color: #eaeaea;
+  color: var(--text-primary);
   line-height: 1;
 }
 
 .risk-label {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #888;
-  margin-top: 2px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-top: 3px;
 }
 
-.risk-badge.critical .risk-label { color: #e41a1c; }
-.risk-badge.high .risk-label { color: #ff7f00; }
-.risk-badge.medium .risk-label { color: #ffff33; }
-.risk-badge.low .risk-label { color: #4daf4a; }
+.risk-badge.critical .risk-label { color: #ef4444; }
+.risk-badge.high .risk-label { color: #f97316; }
+.risk-badge.medium .risk-label { color: #eab308; }
+.risk-badge.low .risk-label { color: #22c55e; }
 
 .suspicious-list {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .suspicious-card {
-  background: #252540;
-  border: 1px solid #2d2d44;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
   border-left-width: 4px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   overflow: hidden;
-  transition: all 0.2s;
+  transition: var(--transition);
 }
 
 .suspicious-card:hover {
-  border-color: #3d3d5c;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 
 .card-main {
-  padding: 16px;
+  padding: 18px 20px;
 }
 
 .entity-header {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
 }
 
 .entity-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border: 2px solid;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   flex-shrink: 0;
+  transition: var(--transition);
 }
 
 .entity-info {
@@ -160,42 +177,43 @@
 
 .entity-name {
   font-size: 16px;
-  font-weight: 600;
-  color: #eaeaea;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .entity-type-badge {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 3px 10px;
+  padding: 4px 12px;
   border-radius: 12px;
   white-space: nowrap;
 }
 
 .entity-meta {
   font-size: 12px;
-  color: #888;
+  color: var(--text-muted);
 }
 
 .risk-score-container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 6px;
-  min-width: 80px;
+  gap: 8px;
+  min-width: 90px;
 }
 
 .risk-score-circle {
   position: relative;
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #2d2d44;
+  background: var(--bg-primary);
+  box-shadow: var(--shadow-sm);
 }
 
 .risk-score-circle::before {
@@ -203,16 +221,16 @@
   position: absolute;
   inset: 4px;
   border-radius: 50%;
-  background: #1a1a2e;
+  background: var(--bg-card);
   z-index: 0;
 }
 
 .risk-score-value {
   position: relative;
   z-index: 1;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
-  color: #eaeaea;
+  color: var(--text-primary);
 }
 
 .risk-level {
@@ -228,8 +246,8 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  padding-top: 16px;
-  border-top: 1px solid #2d2d44;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-primary);
 }
 
 .metric {
@@ -239,22 +257,22 @@
 }
 
 .metric-label {
-  font-size: 11px;
-  font-weight: 500;
-  color: #888;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
 }
 
 .metric-value {
   font-size: 14px;
-  font-weight: 600;
-  color: #eaeaea;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .metric-bar {
   height: 6px;
-  background: #2d2d44;
+  background: var(--bg-primary);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -262,21 +280,21 @@
 .metric-fill {
   height: 100%;
   border-radius: 3px;
-  transition: width 0.5s ease;
+  transition: width 0.6s ease;
 }
 
 .card-reasons {
-  padding: 0 16px 16px;
-  border-top: 1px solid #2d2d44;
-  background: #1a1a2e;
+  padding: 0 20px 18px;
+  border-top: 1px solid var(--border-primary);
+  background: var(--bg-primary);
 }
 
 .card-reasons h5 {
-  font-size: 12px;
-  font-weight: 600;
-  color: #aaa;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   margin: 16px 0 10px 0;
 }
 
@@ -291,18 +309,26 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 10px 12px;
-  background: #252540;
-  border-radius: 8px;
+  padding: 12px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
   font-size: 13px;
-  color: #ccc;
+  color: var(--text-secondary);
   line-height: 1.5;
+  transition: var(--transition);
+}
+
+.reason-item:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  transform: translateX(4px);
 }
 
 .reason-item svg {
   flex-shrink: 0;
   margin-top: 1px;
-  color: #ff7f00;
+  color: #f97316;
 }
 
 .suspicious-panel-empty {
@@ -312,15 +338,15 @@
   justify-content: center;
   height: 100%;
   min-height: 500px;
-  color: #666;
+  color: var(--text-muted);
   gap: 16px;
   text-align: center;
   padding: 40px;
 }
 
 .suspicious-panel-empty h3 {
-  color: #aaa;
-  font-weight: 500;
+  color: var(--text-secondary);
+  font-weight: 600;
 }
 
 .suspicious-panel-empty p {
@@ -330,7 +356,7 @@
 
 .suspicious-panel-empty .hint {
   font-size: 13px;
-  color: #555;
+  color: var(--text-muted);
   font-style: italic;
 }
 
@@ -347,5 +373,10 @@
   .risk-score-container {
     align-items: flex-start;
     width: 100%;
+  }
+  
+  .panel-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
