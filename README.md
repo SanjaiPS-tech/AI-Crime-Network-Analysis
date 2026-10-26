@@ -2,6 +2,10 @@
 
 An AI-powered crime network analysis platform that extracts entities from crime reports/FIRs, maps relationships between entities, builds network graphs, and detects suspicious patterns.
 
+## Demo
+
+📺 **Video Walkthrough**: [Watch on YouTube](https://youtu.be/oHynHSpobw8)
+
 ## Features
 
 1. **Entity Extraction** - Extract Persons, Phones, Locations, Vehicles, Organizations, Emails, Dates, Money from crime reports using spaCy NER + custom rules
